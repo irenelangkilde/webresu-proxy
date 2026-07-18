@@ -1,3 +1,10 @@
 [build]
   # Nothing to build — Netlify just publishes the folder as-is.
   publish = "."
+  edge_functions = "netlify/edge-functions"
+
+# Run the proxy edge function on every request. It handles /u/:slug and
+# /.netlify/functions/getPublishedImage; other paths fall through to _redirects.
+[[edge_functions]]
+  function = "proxy"
+  path = "/*"
