@@ -1,14 +1,11 @@
 # webresu.me thin proxy — routes published-portfolio URLs to the main site.
-# Netlify _redirects syntax:  <from>  <to>  <status>
-# Status 200 = rewrite (URL bar keeps webresu.me).
-# NOTE: named parameters (:slug) work more reliably than :splat in external
-# destination URLs; using them here avoids "empty path segment" bugs.
+# DIAGNOSTIC BUILD: hardcoded /u/probe rule to test if external proxy works at all
+# without parameter substitution. If /u/probe returns 404 "Published page not
+# found" (from main site), external proxying works and substitution is the bug.
 
+/u/probe                                 https://irenes-ventures.com/u/probe                                 200
 /u/:slug                                 https://irenes-ventures.com/u/:slug                                 200
 /.netlify/functions/getPublishedImage    https://irenes-ventures.com/.netlify/functions/getPublishedImage    200
 
-# Bare domain sends visitors to the main marketing site.
 /       https://irenes-ventures.com/     301
-
-# Anything else on webresu.me 404s, so this domain only serves portfolios.
 /*      /404.html                        404
