@@ -1,0 +1,12 @@
+# webresu.me thin proxy — routes published-portfolio URLs to the main site.
+# Netlify _redirects syntax:  <from>  <to>  <status>
+# Status 200 = rewrite (URL bar keeps webresu.me).
+
+/u/*    https://irenes-ventures.com/u/:splat                          200
+/.netlify/functions/getPublishedImage*  https://irenes-ventures.com/.netlify/functions/getPublishedImage:splat  200
+
+# Bare domain sends visitors to the main marketing site.
+/       https://irenes-ventures.com/                                  301
+
+# Anything else on webresu.me 404s, so this domain only serves portfolios.
+/*      /404.html                                                     404

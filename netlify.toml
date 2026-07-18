@@ -1,0 +1,3 @@
+[build]
+  # Nothing to build — Netlify just publishes the folder as-is.
+  publish = "."
