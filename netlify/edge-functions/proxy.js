@@ -53,8 +53,22 @@ export default async function handler(request, context) {
     return proxyTo(url.pathname + url.search, request);
   }
 
-  // Images referenced from published portfolios.
-  if (url.pathname === "/.netlify/functions/getPublishedImage") {
+  // Assets and images referenced from published portfolios:
+  //   getPortfolioAsset — new asset store: user-uploaded images, videos, PDFs
+  //     keyed by ?owner=<userId>&asset=<hash>.<ext>. This is where the editor
+  //     puts everything the user uploads (post-migration).
+  //   getPublishedImage — permanent AI-generated hero images (masthead, scene)
+  //     keyed by slug. Where publishPortfolio promotes hero URLs on publish.
+  //   getSceneImage / getPreviewImage — legacy pre-promotion URLs still baked
+  //     into portfolios published before publishPortfolio's promotion loop
+  //     existed. Kept as a compat shim; can be removed once no live portfolios
+  //     reference them.
+  if (
+    url.pathname === "/.netlify/functions/getPortfolioAsset" ||
+    url.pathname === "/.netlify/functions/getPublishedImage" ||
+    url.pathname === "/.netlify/functions/getSceneImage" ||
+    url.pathname === "/.netlify/functions/getPreviewImage"
+  ) {
     return proxyTo(url.pathname + url.search, request);
   }
 
